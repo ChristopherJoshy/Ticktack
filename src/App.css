@@ -1,38 +1,365 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body.dark-mode {
+  background-color: #222;
+  color: #f5f5f5;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.dark-mode h1 {
+  color: #ecf0f1;
+}
+
+.game-settings {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .game-settings {
+  background-color: #333;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.player-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.player-input {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+.dark-mode input, .dark-mode select {
+  background-color: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+input:disabled, select:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.dark-mode input:disabled, .dark-mode select:disabled {
+  background-color: #333;
+}
+
+.game-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.option {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.game-timer {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .game-timer {
+  background-color: #444;
+}
+
+.status {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 10px 20px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  text-align: center;
+  color: #333;
+}
+
+.dark-mode .status {
+  background-color: #444;
+  color: #f5f5f5;
+}
+
+.game-board {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 40px;
+  margin: 20px 0;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 300px;
+  height: 300px;
+}
+
+.square {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .square {
+  background-color: #444;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.square:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.square.x {
+  color: #e74c3c;
+}
+
+.square.o {
+  color: #3498db;
+}
+
+.square.winner {
+  background-color: #f1c40f;
   color: white;
+  animation: pulse 1s infinite;
 }
 
-.App-link {
-  color: #61dafb;
+.dark-mode .square.winner {
+  background-color: #f39c12;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.scoreboard {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  min-width: 200px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .scoreboard {
+  background-color: #333;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.scoreboard h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+.dark-mode .scoreboard h2 {
+  color: #ecf0f1;
+}
+
+.scores p {
+  padding: 8px 0;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.dark-mode .scores p {
+  border-bottom: 1px solid #444;
+}
+
+.scores p:last-child {
+  border-bottom: none;
+}
+
+.game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.control-button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.control-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.control-button:active {
+  transform: translateY(0);
+}
+
+.control-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dark-mode .control-button {
+  background-color: #2980b9;
+}
+
+.dark-mode .control-button:hover {
+  background-color: #3498db;
+}
+
+.dark-mode .control-button:disabled {
+  background-color: #555;
+}
+
+.game-history {
+  width: 100%;
+  max-width: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .game-history {
+  background-color: #333;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.game-history h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.game-history ol {
+  list-style-position: inside;
+  margin-left: 10px;
+}
+
+.game-history li {
+  margin: 5px 0;
+}
+
+.history-button {
+  background: none;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.dark-mode .history-button {
+  color: #5dade2;
+}
+
+.history-button:disabled {
+  color: #95a5a6;
+  text-decoration: none;
+  cursor: default;
+}
+
+.dark-mode .history-button:disabled {
+  color: #7f8c8d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-board {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .board {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .square {
+    font-size: 2.5rem;
+  }
+  
+  .player-inputs, .game-options {
+    flex-direction: column;
   }
 }
